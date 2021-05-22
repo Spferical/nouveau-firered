@@ -1,0 +1,6 @@
+[submodule "Complete-Fire-Red-Upgrade"]
+	path = cfru
+	url = git@github.com:Skeli789/Complete-Fire-Red-Upgrade.git
+[submodule "Dynamic-Pokemon-Expansion"]
+	path = dpe
+	url = git@github.com:Spferical/Dynamic-Pokemon-Expansion.git
