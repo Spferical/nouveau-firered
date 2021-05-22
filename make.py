@@ -5,6 +5,7 @@ import sys
 import shutil
 import cfru.scripts.make
 import dpe.scripts.make
+import ips_util.ips_util as ips_util
 
 
 def main():
@@ -12,14 +13,25 @@ def main():
     base_rom_path = top_dir / "BPRE0.gba"
     dpe_path = top_dir / "dpe"
     dpe_input_rom_path = dpe_path / "BPRE0.gba"
-    dpe_output_rom_path = dpe_path / "test.gba"
 
+    ips_dir = top_dir / "ips_patches"
+    ips_patches = []
+    for ips_file in ips_dir.iterdir():
+        if ips_file.name.endswith('.ips'):
+            ips_patches.append(ips_util.Patch.load(ips_file))
+    # apply ips patches and output to dpe input rom path
+    with open(base_rom_path, "rb") as in_file:
+        with open(dpe_input_rom_path, "wb") as out_file:
+            data = in_file.read()
+            for patch in ips_patches:
+                data = patch.apply(data)
+            out_file.write(data)
+
+    dpe_output_rom_path = dpe_path / "test.gba"
     try:
         os.remove(dpe_output_rom_path)
     except FileNotFoundError:
         pass
-
-    shutil.copyfile(base_rom_path, dpe_input_rom_path)
     os.chdir(dpe_path)
     dpe.scripts.make.main()
 

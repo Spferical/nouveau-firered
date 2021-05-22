@@ -4,3 +4,6 @@
 [submodule "Dynamic-Pokemon-Expansion"]
 	path = dpe
 	url = git@github.com:Spferical/Dynamic-Pokemon-Expansion.git
+[submodule "ips_util"]
+	path = ips_util
+	url = git@github.com:nleseul/ips_util.git
